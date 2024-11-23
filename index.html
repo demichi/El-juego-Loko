@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Turnos</title>
+        <style>
+            .jugador {
+                height: 150px;
+                width: 150px;
+                background-color: #bbb;
+                border-radius: 50%;
+                display: inline-block;
+            }
+
+            div {
+                text-align: center;
+                word-spacing: 60px;
+                margin-top: 60px;
+            }
+
+            button {
+                font-size: 200px;
+                border-radius: 40px;
+                border-width: 10px;
+            }
+
+            input {
+                font-size: 100px;
+                width: 300px;
+                border-width: 6px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            let turno = 0;
+            function sortear() {
+                var colores = ["red", "green", "blue", "yellow"];
+                for (let i = 4; i >= 1; i--) {
+                    let indice = Math.floor(Math.random() * i);
+                    let color = colores.splice(indice, 1)[0];
+                    document.getElementById(i).style.backgroundColor = color; 
+                }
+                turno++;
+                document.getElementById("turnos").setAttribute("value", turno); 
+            }
+        </script>
+        <div>
+            <span class="jugador" id="1"></span>
+            <span class="jugador" id="2"></span>
+            <span class="jugador" id="3"></span>
+            <span class="jugador" id="4"></span>
+        </div>
+        <div>
+            <input type="number" readonly id="turnos">
+        </div>
+        <div>
+            <button onclick="sortear();">Sortear</button>
+        </div>
+    </body>
+</html>
