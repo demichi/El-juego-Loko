@@ -23,12 +23,6 @@
                 border-width: 10px;
             }
 
-            input {
-                font-size: 100px;
-                width: 300px;
-                border-width: 6px;
-                text-align: center;
-            }
             p {
                 text-align: center;
                 font-size: 100px;
@@ -49,7 +43,7 @@
                 }
 
                 turno++;
-                document.getElementById("turnos").setAttribute("value", turno); 
+                document.getElementById("turnos").innerText = "Turno: " + turno; 
 
                 if (!inicial) {
                     inicial = Date.now();
@@ -66,11 +60,13 @@
             <span class="jugador" id="4"></span>
         </div>
         <div>
-            <input type="number" readonly id="turnos">
+            <p id="turnos"></p>
         </div>
         <div>
             <button onclick="sortear();">Sortear</button>
         </div>
-        <div><p id="timer"></p></div>
+        <div>
+            <p id="timer"></p>
+        </div>
     </body>
 </html>
