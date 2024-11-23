@@ -29,20 +29,34 @@
                 border-width: 6px;
                 text-align: center;
             }
+            p {
+                text-align: center;
+                font-size: 100px;
+            }
         </style>
     </head>
     <body>
         <script>
-            let turno = 0;
+            var turno = 0;
+            var tiempo;
+            var inicial;
             function sortear() {
                 var colores = ["red", "green", "blue", "yellow"];
-                for (let i = 4; i >= 1; i--) {
-                    let indice = Math.floor(Math.random() * i);
-                    let color = colores.splice(indice, 1)[0];
-                    document.getElementById(i).style.backgroundColor = color; 
+                for (var i = 4; i >= 1; i--) {
+                    var indice = Math.floor(Math.random() * i);
+                    var color = colores.splice(indice, 1)[0];
+                    document.getElementById(i).style.backgroundColor = color;
                 }
+
                 turno++;
                 document.getElementById("turnos").setAttribute("value", turno); 
+
+                if (!inicial) {
+                    inicial = Date.now();
+                }
+                tiempo = Date.now() - inicial + new Date().getTimezoneOffset() * 60000;
+                var reloj = new Date(tiempo).toTimeString().slice(0, 8);
+                document.getElementById("timer").innerText = reloj;
             }
         </script>
         <div>
@@ -57,5 +71,6 @@
         <div>
             <button onclick="sortear();">Sortear</button>
         </div>
+        <div><p id="timer"></p></div>
     </body>
 </html>
