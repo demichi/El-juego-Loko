@@ -40,6 +40,9 @@
                     var indice = Math.floor(Math.random() * i);
                     var color = colores.splice(indice, 1)[0];
                     document.getElementById(i).style.backgroundColor = color;
+                    if (i==4){
+                        document.getElementById("boton").style.backgroundColor = color; 
+                    }
                 }
 
                 turno++;
@@ -60,13 +63,13 @@
             <span class="jugador" id="4"></span>
         </div>
         <div>
+            <p id="timer"></p>
+        </div>
+        <div>
             <p id="turnos"></p>
         </div>
         <div>
-            <button onclick="sortear();">Sortear</button>
-        </div>
-        <div>
-            <p id="timer"></p>
+            <button id="boton" onclick="sortear();">Sortear</button>
         </div>
     </body>
 </html>
