@@ -4,17 +4,16 @@
         <title>Turnos</title>
         <style>
             .jugador {
-                height: 150px;
-                width: 150px;
-                background-color: #bbb;
+                height: 125px;
+                width: 125px;
                 border-radius: 50%;
                 display: inline-block;
             }
 
             div {
                 text-align: center;
-                word-spacing: 60px;
                 margin-top: 60px;
+                word-spacing: 30px;
             }
 
             button {
@@ -34,33 +33,74 @@
             var turno = 0;
             var tiempo;
             var inicial;
+            var coloresTodos;
+            var maximo = 6;
+            var resetear = true;
+
             function sortear() {
-                var colores = ["red", "green", "blue", "yellow"];
-                for (var i = 4; i >= 1; i--) {
+                if (!inicial) {             
+                    inicial = Date.now();
+                    document.getElementById("boton").innerText = "Sortear";
+                }
+
+                if (resetear) {
+                    setearColores();   
+                }
+                
+                var colores = [...coloresTodos];
+                for (var i = maximo; i >= 1; i--) {
                     var indice = Math.floor(Math.random() * i);
                     var color = colores.splice(indice, 1)[0];
                     document.getElementById(i).style.backgroundColor = color;
-                    if (i==4){
+                    document.getElementById(i).setAttribute("color", color);
+                    if (i == maximo){
                         document.getElementById("boton").style.backgroundColor = color; 
                     }
                 }
 
                 turno++;
-                document.getElementById("turnos").innerText = "Turno: " + turno; 
+                document.getElementById("turnos").innerText = "Ronda: " + turno; 
 
-                if (!inicial) {
-                    inicial = Date.now();
-                }
                 tiempo = Date.now() - inicial + new Date().getTimezoneOffset() * 60000;
                 var reloj = new Date(tiempo).toTimeString().slice(0, 8);
                 document.getElementById("timer").innerText = reloj;
             }
+
+            function setearColores() {
+                resetear = false;
+                coloresTodos = [];
+                for (var i = 6; i >= 1; i--) {
+                    if (document.getElementById(i).style.backgroundColor != "gray") {
+                        coloresTodos.push(document.getElementById(i).style.backgroundColor);
+                    }
+                    if (i > maximo) {
+                        document.getElementById(i).style.display = "none";
+                        document.getElementById(i).style.backgroundColor = "gray";
+                    }
+                }
+                for (var i = maximo; i >= 1; i--) {
+                    document.getElementById(i).setAttribute("color", coloresTodos[i - 1]);
+                }
+            }
+
+            function cambiar(i) {
+                if (document.getElementById(i).style.backgroundColor == "gray") {
+                    document.getElementById(i).style.backgroundColor = document.getElementById(i).getAttribute("color");
+                    maximo++;
+                } else if (maximo > 3 || inicial && maximo == 3) {
+                    document.getElementById(i).style.backgroundColor = "gray";
+                    maximo--;
+                }
+                resetear = true;
+            }
         </script>
         <div>
-            <span class="jugador" id="1"></span>
-            <span class="jugador" id="2"></span>
-            <span class="jugador" id="3"></span>
-            <span class="jugador" id="4"></span>
+            <span class="jugador" id="1" color="darkorange" style="background-color: darkorange;" onclick="cambiar(1);"></span>
+            <span class="jugador" id="2" color="blue" style="background-color: blue;" onclick="cambiar(2);"></span>
+            <span class="jugador" id="3" color="yellow" style="background-color: yellow;" onclick="cambiar(3);"></span>
+            <span class="jugador" id="4" color="purple" style="background-color: purple;" onclick="cambiar(4);"></span>
+            <span class="jugador" id="5" color="green" style="background-color: green;" onclick="cambiar(5);"></span>
+            <span class="jugador" id="6" color="red" style="background-color: red;" onclick="cambiar(6);"></span>
         </div>
         <div>
             <p id="timer"></p>
@@ -69,7 +109,7 @@
             <p id="turnos"></p>
         </div>
         <div>
-            <button id="boton" onclick="sortear();">Sortear</button>
+            <button id="boton" onclick="sortear();">Empezar</button>
         </div>
     </body>
 </html>
