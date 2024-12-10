@@ -16,6 +16,16 @@
                 word-spacing: 30px;
             }
 
+            .aparecer {
+                animation-name: aparecer;
+                animation-duration: 500ms;
+            }
+
+            @keyframes aparecer {
+                from {margin-left: -200%;}
+                to {margin-left: 0%;}
+            }
+
             button {
                 font-size: 200px;
                 border-radius: 40px;
@@ -64,6 +74,9 @@
                 tiempo = Date.now() - inicial + new Date().getTimezoneOffset() * 60000;
                 var reloj = new Date(tiempo).toTimeString().slice(0, 8);
                 document.getElementById("timer").innerText = reloj;
+                document.getElementById("jugadores").classList.remove("aparecer");
+                document.getElementById("jugadores").offsetWidth;
+                document.getElementById("jugadores").classList.add("aparecer");
             }
 
             function setearColores() {
@@ -94,7 +107,7 @@
                 resetear = true;
             }
         </script>
-        <div>
+        <div id="jugadores">
             <span class="jugador" id="1" color="darkorange" style="background-color: darkorange;" onclick="cambiar(1);"></span>
             <span class="jugador" id="2" color="blue" style="background-color: blue;" onclick="cambiar(2);"></span>
             <span class="jugador" id="3" color="yellow" style="background-color: yellow;" onclick="cambiar(3);"></span>
